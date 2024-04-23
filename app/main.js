@@ -12,7 +12,7 @@ const server = net.createServer((socket) => {
     
     socket.on("data", (data) => {
         httpRequest = data.toString();
-
+        console.log(data);
         const [path] = httpRequest.split(" ");
         console.log(path);
         if (path === "/") {
