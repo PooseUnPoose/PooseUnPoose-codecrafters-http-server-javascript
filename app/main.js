@@ -18,7 +18,7 @@ const server = net.createServer((socket) => {
         console.log("This is the path \n");
         console.log(path[1]);
 
-        console.log("this is a test" + httpRequest.substring(0, 6));
+        console.log("this is a test" + httpRequest.substring(0, 10));
         if (path[1] === '/') {
             socket.write('HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n');
         } 
