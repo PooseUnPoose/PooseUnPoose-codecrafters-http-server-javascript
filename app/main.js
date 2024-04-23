@@ -1,5 +1,6 @@
 const net = require("net");
 console.log("Logs from your program will appear here!");
+
 const server = net.createServer((socket) => {
     socket.on("close", () => {
         socket.end();
@@ -33,11 +34,13 @@ server.on('connection', function(socket) {
             resp += `Content-Length: ${UseragentStr.length}\r\n\r\n${UseragentStr}`
             socket.write(resp);
             return
-
+        }else if(path.startsWith('/files')){
+            console.log("we got to the files area")
+            return
         } else {
             socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
             return
-            
+
         }
     })
 })
