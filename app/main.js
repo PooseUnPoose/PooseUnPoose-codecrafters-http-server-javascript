@@ -12,11 +12,11 @@ const server = net.createServer((socket) => {
     
     socket.on("data", (data) => {
         httpRequest = data.toString();
+        
         console.log(httpRequest);
+        const [path] = httpRequest.split("/");
+        console.log(path);
 
-        const [path] = httpRequest.split(" ");
-
-        console.log(path[4]);
         if (path === "/") {
             socket.write("HTTP/1.1 200 OK\r\n\r\nNice");
         } else {
