@@ -1,4 +1,5 @@
 const net = require("net");
+const fs = require('fs');
 console.log("Logs from your program will appear here!");
 
 const server = net.createServer((socket) => {
@@ -27,7 +28,6 @@ server.on('connection', function(socket) {
             return
 
         }else if(path.startsWith('/user-agent')){
-            console.log('We got to the user agent area');
             const UseragentStr = (chunk.toString().split('\r\n')[2].split(' ')[1]);
             let resp = 'HTTP/1.1 200 OK\r\n';
             resp += 'Content-Type: text/plain\r\n';
@@ -36,10 +36,26 @@ server.on('connection', function(socket) {
             return
         }else if(path.startsWith('/files')){
             console.log("we got to the files area");
-            console.log(path.lastIndexOf('/'));
             FileStr = path.substring(path.lastIndexOf('/')+1);
             console.log(FileStr);
-            return
+            fs.access(FileStr, fs.constants.F_OK, (err) => {
+                if (err) {
+                    socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
+                    return;
+                }
+                else{
+                    fs.readFile(FileStr, 'utf8', (err, data) => {
+                        console.log("we read the file");
+                        let resp = 'HTTP/1.1 200 OK\r\n';
+                        resp += 'Content-Type: application/octet-stream\r\n';
+                        resp += `Content-Length: ${data.length}\r\n\r\n${data}`;
+                        socket.write(resp);
+                        return
+                    });
+                    return
+                }
+            });
+            
         } else {
             socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
             return
