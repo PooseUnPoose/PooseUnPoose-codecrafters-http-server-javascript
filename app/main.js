@@ -37,6 +37,7 @@ server.on('connection', function(socket) {
         }else if(path.startsWith('/files')){
             console.log("we got to the files area");
             console.log(path.indexOf('/files/'));
+            console.log(path);
             //const filepath = path.substring(path.lastIndexOf('/files/'));
             //console.log(filepath);
             return
