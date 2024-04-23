@@ -1,48 +1,3 @@
-/*const net = require('net');
-
-// You can use print statements as follows for debugging, they'll be visible when running tests.
-console.log('Logs from your program will appear here!');
-
-// Uncomment this to pass the first stage
-const server = net.createServer((socket) => {
-    socket.on('close', () => {
-        socket.end();
-        server.close();
-    });
-    
-    socket.on('data', (data) => {
-        httpRequest = data.toString();
-
-        console.log("This is the full http request \n"+httpRequest);
-        const path = httpRequest.split(' ');
-        console.log("This is the path \n");
-        console.log(path[1]);
-
-        console.log("this is a test - " + httpRequest.substring(0, 10));
-        console.log("this is a test - " + path[1].substring(0,6));
-        console.log("this is a test - " + path[1].substring(6));
-
-        if (path[1] === '/') {
-            socket.write('HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n');
-        } 
-        
-        else if(httpRequest.substring(0, 10) === 'GET /echo/'){
-            console.log("We got to the echo request")
-            let EchoText = path[1].substring(6);
-            EchoLength = EchoText.length;
-            console.log('HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n Content-Length:'+EchoLength+'\r\n\r\n'+EchoText);
-            socket.write('HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n Content-Length:'+EchoLength+'\r\n\r\n'+EchoText);
-        }else {
-            socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
-        }
-        socket.on('end', () => {})
-    });
-});
-
-
-
-server.listen(4221, 'localhost');
-*/
 const net = require("net");
 console.log("Logs from your program will appear here!");
 const server = net.createServer((socket) => {
@@ -59,6 +14,7 @@ socket.on('data', (chunk) => {
     const path = chunk.toString().split('\r\n')[0].split(' ')[1]
     if (path === '/') {
         socket.write('HTTP/1.1 200 OK\r\n\r\n');
+
     } else if (path.startsWith('/echo')) {
         let arr = path.split('/').filter(elem => elem)
         arr.shift()
@@ -66,8 +22,16 @@ socket.on('data', (chunk) => {
         let resp = 'HTTP/1.1 200 OK\r\n'
         resp += 'Content-Type: text/plain\r\n'
         resp += `Content-Length: ${EchoString.length}\r\n\r\n${EchoString}`
-
         socket.write(resp);
+        return
+
+    }else if(path.startsWith('user-agent')){
+        console.log('We got to the user agent area')
+        /*const UseragentStr;
+        let resp = 'HTTP/1.1 200 OK\r\n'
+        resp += 'Content-Type: text/plain\r\n'
+        resp += `Content-Length: ${UseragentStr.length}\r\n\r\n${UseragentStr}`
+        socket.write(resp);*/
         return
     } else {
         socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
