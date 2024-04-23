@@ -1,31 +1,36 @@
-const net = require("net");
+const net = require('net');
 
 // You can use print statements as follows for debugging, they'll be visible when running tests.
-console.log("Logs from your program will appear here!");
+console.log('Logs from your program will appear here!');
 
 // Uncomment this to pass the first stage
 const server = net.createServer((socket) => {
-    socket.on("close", () => {
+    socket.on('close', () => {
         socket.end();
         server.close();
     });
     
-    socket.on("data", (data) => {
+    socket.on('data', (data) => {
         httpRequest = data.toString();
 
         console.log(httpRequest);
-        const path = httpRequest.split(" ");
+        const path = httpRequest.split(' ');
         console.log(path[1]);
 
-        if (path[1] === "/") {
-            socket.write("HTTP/1.1 200 OK\r\n\r\nNice");
-        } else {
-            socket.write("HTTP/1.1 404 Not Found\r\n\r\nBad");
+        if (path[1] === '/') {
+            socket.write('HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n');
+        } 
+        else if(path.startsWith('/echo')){
+            socket.write('HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n Content-Length: \r\n\r\nHello');
+
         }
-        socket.on("end", () => {})
+            else {
+            socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
+        }
+        socket.on('end', () => {})
     });
 });
 
 
 
-server.listen(4221, "localhost");
+server.listen(4221, 'localhost');
