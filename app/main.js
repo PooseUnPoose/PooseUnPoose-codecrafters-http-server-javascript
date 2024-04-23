@@ -1,4 +1,4 @@
-const net = require('net');
+/*const net = require('net');
 
 // You can use print statements as follows for debugging, they'll be visible when running tests.
 console.log('Logs from your program will appear here!');
@@ -42,3 +42,36 @@ const server = net.createServer((socket) => {
 
 
 server.listen(4221, 'localhost');
+*/
+const net = require("net");
+console.log("Logs from your program will appear here!");
+const server = net.createServer((socket) => {
+    socket.on("close", () => {
+        socket.end();
+        server.close();
+    });
+});
+
+server.listen(4221, "localhost");
+server.on('connection', function(socket) {
+socket.on('data', (chunk) => {
+    console.log('data received from the client: ', chunk.toString().split('\r\n'))
+    const path = chunk.toString().split('\r\n')[0].split(' ')[1]
+    if (path === '/') {
+        socket.write('HTTP/1.1 200 OK\r\n\r\n');
+    } else if (path.startsWith('/echo')) {
+        let arr = path.split('/').filter(elem => elem)
+        arr.shift()
+        const randomStr = arr.join('/')
+        let resp = 'HTTP/1.1 200 OK\r\n'
+        resp += 'Content-Type: text/plain\r\n'
+        resp += `Content-Length: ${randomStr.length}\r\n\r\n`
+        resp += `${randomStr}`
+        socket.write(resp);
+        return
+    } else {
+        socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
+        return
+        }
+    })
+})
