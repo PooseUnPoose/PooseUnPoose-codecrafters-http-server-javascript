@@ -64,9 +64,9 @@ socket.on('data', (chunk) => {
         arr.shift()
         const randomStr = arr.join('/')
         let resp = 'HTTP/1.1 200 OK\r\n'
-        resp += 'Content-Type: text/plain\r\n'
-        resp += `Content-Length: ${randomStr.length}\r\n\r\n`
-        resp += `${randomStr}`
+        resp += `Content-Type: text/plain\r\n Content-Length: ${randomStr.length}\r\n\r\n${randomStr}`
+        //resp += `Content-Length: ${randomStr.length}\r\n\r\n`
+        //resp += `${randomStr}`
         socket.write(resp);
         return
     } else {
