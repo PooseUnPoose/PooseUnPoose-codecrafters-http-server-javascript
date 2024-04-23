@@ -28,8 +28,11 @@ const server = net.createServer((socket) => {
         
         else if(httpRequest.substring(0, 10) === 'GET /echo/'){
             console.log("We got to the echo request")
-            
-            socket.write('HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n Content-Length: \r\n\r\nHello');
+            let EchoText = path[1].substring(6);
+            console.log(EchoText);
+            EchoLength = EchoText.length;
+            console.log(EchoLength);
+            socket.write('HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n Content-Length: \r\n' + EchoText + '\r\n\r\n');
         }
 
             else {
