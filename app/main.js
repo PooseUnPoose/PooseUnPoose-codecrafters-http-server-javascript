@@ -15,7 +15,7 @@ const server = net.createServer((socket) => {
 
         console.log(httpRequest);
         const path = httpRequest.split(" ");
-        console.log(path);
+        console.log(path[1]);
 
         if (path === "/") {
             socket.write("HTTP/1.1 200 OK\r\n\r\nNice");
