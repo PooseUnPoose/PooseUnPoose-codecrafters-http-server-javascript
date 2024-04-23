@@ -32,7 +32,7 @@ const server = net.createServer((socket) => {
             console.log(EchoText);
             EchoLength = EchoText.length;
             console.log(EchoLength);
-            socket.write('HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n Content-Length: \r\n' + EchoText + '\r\n\r\n');
+            socket.write('HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n Content-Length:'+EchoLength+'\r\n\r\n'+EchoText);
         }
 
             else {
