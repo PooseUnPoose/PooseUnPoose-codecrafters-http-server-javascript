@@ -65,8 +65,8 @@ socket.on('data', (chunk) => {
         const EchoString = arr.join('/')
         let resp = 'HTTP/1.1 200 OK\r\n'
         resp += 'Content-Type: text/plain\r\n'
-        resp += `Content-Length: ${EchoString.length}\r\n\r\n`
-        resp += `${EchoString}`
+        //resp += `Content-Length: ${EchoString.length}\r\n\r\n${EchoString}`
+
         socket.write(resp);
         return
     } else {
