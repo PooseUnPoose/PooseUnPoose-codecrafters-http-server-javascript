@@ -27,7 +27,7 @@ server.on('connection', function(socket) {
 
         }else if(path.startsWith('/user-agent')){
             console.log('We got to the user agent area')
-            console.log(chunk.toString().split('\r\n')[1].split(' ')[2])
+            console.log(chunk.toString().split('\r\n')[2].split(' ')[1])
             /*const UseragentStr;
             let resp = 'HTTP/1.1 200 OK\r\n'
             resp += 'Content-Type: text/plain\r\n'
