@@ -37,9 +37,8 @@ server.on('connection', function(socket) {
         }else if(path.startsWith('/files')){
             console.log("we got to the files area");
             console.log(path.lastIndexOf('/'));
-            console.log(path.substring(path.lastIndexOf('/')));
-            //const filepath = path.substring(path.lastIndexOf('/files/'));
-            //console.log(filepath);
+            FileStr = path.substring(path.lastIndexOf('/')+1);
+            console.log(FileStr);
             return
         } else {
             socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
