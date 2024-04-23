@@ -33,9 +33,11 @@ server.on('connection', function(socket) {
             resp += `Content-Length: ${UseragentStr.length}\r\n\r\n${UseragentStr}`
             socket.write(resp);
             return
+
         } else {
             socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
             return
+            
         }
     })
 })
