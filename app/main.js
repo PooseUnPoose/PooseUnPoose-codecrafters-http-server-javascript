@@ -15,13 +15,15 @@ const server = net.createServer((socket) => {
 
         console.log("This is the full http request \n"+httpRequest);
         const path = httpRequest.split(' ');
+        console.log("This is the path \n"+path);
         console.log(path[1]);
 
         if (path[1] === '/') {
             socket.write('HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n');
         } 
-        else if(path.startsWith('/echo')){
-            
+        
+        else if(path.substring('0, 6')=='/echo/'){
+            console.log("We got to the echo request")
             socket.write('HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n Content-Length: \r\n\r\nHello');
 
         }
