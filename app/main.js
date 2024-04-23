@@ -9,17 +9,18 @@ const server = net.createServer((socket) => {
         socket.end();
         server.close();
     });
-    //200 response
+    
     socket.on("data", (data) => {
-        const datasplit = data.toString().split('/');
-        if (datasplit[1] == ' HTTP'){
-            const response = "HTTP/1.1 200 OK\r\n\r\n"
+        httpRequest = data.toString();
+
+        const [path] = httpRequest.split(" ");
+        console.log(path);
+        if (path === "/") {
+            socket.write("HTTP/1.1 200 OK\r\n\r\nNice");
+        } else {
+            socket.write("HTTP/1.1 404 Not Found\r\n\r\nBad");
         }
-        else{
-            const response = "HTTP/1.1 404 OK\r\n\r\n"
-        }
-        socket.read(data);
-        socket.write(response);
+        socket.on("end", () => {})
     });
 });
 
