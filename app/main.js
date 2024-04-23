@@ -27,12 +27,11 @@ server.on('connection', function(socket) {
 
         }else if(path.startsWith('/user-agent')){
             console.log('We got to the user agent area')
-            console.log(chunk.toString().split('\r\n')[2].split(' ')[1])
-            /*const UseragentStr;
+            const UseragentStr = (chunk.toString().split('\r\n')[2].split(' ')[1]);
             let resp = 'HTTP/1.1 200 OK\r\n'
             resp += 'Content-Type: text/plain\r\n'
             resp += `Content-Length: ${UseragentStr.length}\r\n\r\n${UseragentStr}`
-            socket.write(resp);*/
+            socket.write(resp);
             return
         } else {
             socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
