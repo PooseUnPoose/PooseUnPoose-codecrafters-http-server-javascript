@@ -17,7 +17,7 @@ const server = net.createServer((socket) => {
         const path = httpRequest.split(" ");
         console.log(path[1]);
 
-        if (path === "/") {
+        if (path[1] === "/") {
             socket.write("HTTP/1.1 200 OK\r\n\r\nNice");
         } else {
             socket.write("HTTP/1.1 404 Not Found\r\n\r\nBad");
