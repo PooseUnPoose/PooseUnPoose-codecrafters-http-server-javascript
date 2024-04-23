@@ -18,12 +18,13 @@ const server = net.createServer((socket) => {
         console.log("This is the path \n");
         console.log(path[1]);
 
-        console.log("this is a test" + httpRequest.substring(0, 10));
+        console.log("this is a test - " + httpRequest.substring(0, 10));
+        console.log("this is a test - " + httpRequest.substring(10));
         if (path[1] === '/') {
             socket.write('HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n');
         } 
         /*
-        else if(path.substring('0, 6')=='/echo/'){
+        else if(httpRequest.substring(0, 10) === 'GET /echo/'){
             console.log("We got to the echo request")
             socket.write('HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n Content-Length: \r\n\r\nHello');
         }*/
