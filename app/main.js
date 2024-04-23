@@ -29,13 +29,9 @@ const server = net.createServer((socket) => {
         else if(httpRequest.substring(0, 10) === 'GET /echo/'){
             console.log("We got to the echo request")
             let EchoText = path[1].substring(6);
-            console.log(EchoText);
             EchoLength = EchoText.length;
-            console.log(EchoLength);
             socket.write('HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n Content-Length:'+EchoLength+'\r\n\r\n'+EchoText);
-        }
-
-            else {
+        }else {
             socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
         }
         socket.on('end', () => {})
