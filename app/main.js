@@ -62,11 +62,11 @@ socket.on('data', (chunk) => {
     } else if (path.startsWith('/echo')) {
         let arr = path.split('/').filter(elem => elem)
         arr.shift()
-        const randomStr = arr.join('/')
+        const EchoString = arr.join('/')
         let resp = 'HTTP/1.1 200 OK\r\n'
-        resp += `Content-Type: text/plain\r\n Content-Length: ${randomStr.length}\r\n\r\n${randomStr}`
-        //resp += `Content-Length: ${randomStr.length}\r\n\r\n`
-        //resp += `${randomStr}`
+        resp += 'Content-Type: text/plain\r\n'
+        resp += `Content-Length: ${EchoString.length}\r\n\r\n`
+        resp += `${EchoString}`
         socket.write(resp);
         return
     } else {
