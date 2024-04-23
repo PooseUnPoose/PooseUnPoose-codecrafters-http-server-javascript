@@ -25,7 +25,7 @@ socket.on('data', (chunk) => {
         socket.write(resp);
         return
 
-    }else if(path.startsWith('user-agent')){
+    }else if(path.startsWith('/user-agent')){
         console.log('We got to the user agent area')
         /*const UseragentStr;
         let resp = 'HTTP/1.1 200 OK\r\n'
