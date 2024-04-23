@@ -14,7 +14,7 @@ const server = net.createServer((socket) => {
         httpRequest = data.toString();
 
         console.log(httpRequest);
-        const path = httpRequest.split("/");
+        const path = httpRequest.split(" ");
         console.log(path);
 
         if (path === "/") {
