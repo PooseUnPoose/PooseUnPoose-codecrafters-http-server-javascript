@@ -11,7 +11,13 @@ const server = net.createServer((socket) => {
     });
     //200 response
     socket.on("data", (data) => {
-        const response = "HTTP/1.1 200 OK\r\n\r\n"
+        const datasplit = data.toString().split('/');
+        if (datasplit[1] == ' HTTP'){
+            const response = "HTTP/1.1 200 OK\r\n\r\n"
+        }
+        else{
+            const response = "HTTP/1.1 404 OK\r\n\r\n"
+        }
         socket.read(data);
         socket.write(response);
     });
