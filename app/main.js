@@ -56,43 +56,16 @@ function FileRequest(path, socket) {
     const FilePath = `${Directory}/${FileName}`;
     
     if (fs.existsSync(FilePath)) {
-    // Extract the filename from the path
-
-    const filename = path.substring('/files/'.length);
-
-    // Construct the full path to the file based on the directory provided
-
-    const directory = process.argv[process.argv.indexOf('--directory') + 1];
-
-    const filePath = `${directory}/${filename}`;
-
-    // Check if the file exists
-
-    if (fs.existsSync(filePath)) {
-
-        // Read the file contents
-
-        const fileContents = fs.readFileSync(filePath);
-
-        // Calculate the content length based on the file size
-
-        const contentLength = fileContents.length;
-
-        // Construct the response with application/octet-stream content type
-
-        const response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${contentLength}\r\n\r\n ${fileContents}`;
-
-        // Send the response headers
-
-        socket.write(response);
-
-        // Send the file contents as the response body
-
-        socket.write(fileContents);
+        const FileContent = fs.readFileSync(FilePath);
+        const FileLength = FileContent.length;
+        const Response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-length: ${FileLength}`;
+        console.log(Response);
+        console.log(FileContent.toString);
+        socket.write(Response);
+        socket.write(FileContent);
     }else{
         NotFound(socket);
     }
-}
 }
 
 function NotFound(socket){
