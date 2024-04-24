@@ -60,7 +60,7 @@ function FileRequest(path, socket) {
         const FileLength = FileContent.length;
         const Response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-length: ${FileLength}`;
         console.log(Response);
-        console.log(FileContent);
+        console.log(FileContent.toString());
         socket.write(Response);
         socket.write(FileContent);
     }else{
