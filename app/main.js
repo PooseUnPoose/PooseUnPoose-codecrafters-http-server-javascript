@@ -51,7 +51,7 @@ server.on('connection', function(socket) {
                         resp += `Content-Length: ${data.length}\r\n\r\n${data}`;
                         socket.write(resp);
                         return
-                    });
+                    });c
                     return
                 }
             });
