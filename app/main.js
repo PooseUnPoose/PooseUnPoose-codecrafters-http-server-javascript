@@ -51,38 +51,6 @@ function AgentRequest(headers, socket) {
 }
 
 function FileRequest(path, socket) {
-    /*const FileName = path.substring('/files/'.length);
-    const Directory = process.argv[process.argv.indexOf('--directory') + 1];
-    const FilePath = `${Directory}/${FileName}`;
-    
-    if (fs.existsSync(FilePath)) {
-    // Extract the filename from the path
-
-    const filename = path.substring('/files/'.length);
-
-    // Construct the full path to the file based on the directory provided
-
-    const directory = process.argv[process.argv.indexOf('--directory') + 1];
-
-    const filePath = `${directory}/${filename}`;
-
-    // Check if the file exists
-
-    if (fs.existsSync(filePath)) {
-        const fileContents = fs.readFileSync(filePath);
-        const contentLength = fileContents.length;
-        const response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${contentLength}\r\n\r\n`;
-        socket.write(response);
-        console.log(response);
-        socket.write(fileContents);
-        console.log(fileContents);
-    }else{
-        NotFound(socket);
-    }
-}*/
-
-// Extract the filename from the path
-
 const filename = path.substring('/files/'.length);
 
 // Construct the full path to the file based on the directory provided
@@ -116,11 +84,7 @@ if (fs.existsSync(filePath)) {
     socket.write(fileContents);
 
 } else {
-
-    // If the file doesn't exist, respond with 404
-
-    socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
-
+    NotFound(socket);
 }
 
 
