@@ -1,49 +1,54 @@
-const net = require("net");
+const net = require('net');
+
 const fs = require('fs');
-console.log("Logs from your program will appear here!");
+
+console.log('Logs from your program will appear here!');
 
 const server = net.createServer((socket) => {
-    socket.on("close", () => {
+    socket.on('data', (data) => {
+        const [requestLine, ...headers] = data.toString().split('\r\n');
+        const [method, path] = requestLine.split(' ');
+        if (path === '/') {
+            socket.write('HTTP/1.1 200 OK\r\n\r\n');
+        } else if (path.startsWith('/echo/')) {
+            handleEchoRequest(path, socket);
+        } else if (path.startsWith('/user-agent')) {
+            handleAgentRequest(headers, socket);
+        } else if (path.startsWith('/files/')) {
+            handleFileRequest(path, socket);
+        } else {
+            socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
+            return;
+        }
         socket.end();
-        server.close();
+    });
+    socket.on('close', () => {
+        socket.end();
     });
 });
 
-server.listen(4221, "localhost");
-server.on('connection', function(socket) {
-    socket.on('data', (chunk) => {
-        console.log('data received from the client: ', chunk.toString().split('\r\n'));
-        const path = chunk.toString().split('\r\n')[0].split(' ')[1];
-        if (path === '/') {
-            socket.write('HTTP/1.1 200 OK\r\n\r\n');
+server.listen(4221, 'localhost');
 
-        } else if (path.startsWith('/echo')) {
-            EchoRequest(path, socket);
-            return
-        }else if(path.startsWith('/user-agent')){
-            UserAgentRequest(path, socket);
-            return
-        } else {
-            socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
-            return
+function handleEchoRequest(path, socket) {
+    const randomString = path.substring('/echo/'.length);
+    const contentLength = randomString.length;
+    const response = `HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${contentLength}\r\n\r\n${randomString}\r\n`;
+    socket.write(response);
 
+}
+
+function handleAgentRequest(headers, socket) {
+    let userAgent = 'Unknown';
+    for (const header of headers) {
+        if (header.startsWith('User-Agent:')) {
+            userAgent = header.substring('User-Agent:'.length).trim();
+            break;
         }
-    })
-})
-
-function EchoRequest(path, socket){
-    const Echostring = path.substring('/echo/'.length);
-    console.log (Echostring);
-    const EchoLength = Echostring.length;
-    const Response = `HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n Content-Length: ${EchoLength}\r\n\r\n${Echostring}`;
-    socket.write(Response);
-}
-function UserAgentRequest(path, socket){
-    const UserAgentStr = (chunk.toString().split('\r\n')[2].split(' ')[1]);
-    const UserAgentLength = UserAgentStr.length;
-    const Response = `HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n Content-Length: ${UserAgentLength}\r\n\r\n${UserAgentStr}`;
-    socket.write(Response);
-}
-function FileRequest(path, socket){
+    }
+    const contentLength = userAgent.length;
+    console.log(userAgent);
+    const response = `HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${contentLength}\r\n\r\n${userAgent}\r\n`;
+    // Send the response
+    socket.write(response);
 
 }
