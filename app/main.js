@@ -93,6 +93,7 @@ function FileRequest(path, socket) {
         NotFound(socket);
     }
 }
+}
 
 function NotFound(socket){
     socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
