@@ -7,7 +7,7 @@ const server = net.createServer((socket) => {
     socket.on('data', (data) => {
         const [requestLine, ...headers] = data.toString().split('\r\n');
         const [method, path] = requestLine.split(' ');
-
+        console.log([requestLine, ...headers])
         if (path === '/') {
             socket.write('HTTP/1.1 200 OK\r\n\r\n');
         } else if (path.startsWith('/echo/')) {
@@ -64,6 +64,11 @@ function FileRequest(path, socket) {
         NotFound(socket);
     }
 }
+
+function PostFile(path, socket){
+
+}
+
 
 function NotFound(socket){
     socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
