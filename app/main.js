@@ -51,43 +51,23 @@ function AgentRequest(headers, socket) {
 }
 
 function FileRequest(path, socket) {
-const filename = path.substring('/files/'.length);
-
-// Construct the full path to the file based on the directory provided
-
-const directory = process.argv[process.argv.indexOf('--directory') + 1];
-
-const filePath = `${directory}/${filename}`;
-
-// Check if the file exists
-
-if (fs.existsSync(filePath)) {
-
+    const FileName = path.substring('/files/'.length);
+    const Directory = process.argv[process.argv.indexOf('--directory') + 1];
+    const FilePath = `${Directory}/${FileName}`;
+    if (fs.existsSync(FilePath)) {
     // Read the file contents
-
-    const fileContents = fs.readFileSync(filePath);
-
+        const fileContents = fs.readFileSync(FilePath);
     // Calculate the content length based on the file size
-
-    const contentLength = fileContents.length;
-
+        const contentLength = fileContents.length;
     // Construct the response with application/octet-stream content type
-
-    const response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${contentLength}\r\n\r\n`;
-
+        const response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${contentLength}\r\n\r\n`;
     // Send the response headers
-
-    socket.write(response);
-
+        socket.write(response);
     // Send the file contents as the response body
-
-    socket.write(fileContents);
-
-} else {
-    NotFound(socket);
-}
-
-
+        socket.write(fileContents);
+    } else {
+        NotFound(socket);
+    }
 }
 
 function NotFound(socket){
