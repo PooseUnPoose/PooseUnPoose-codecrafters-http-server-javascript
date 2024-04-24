@@ -81,7 +81,7 @@ function FileRequest(path, socket) {
         // Construct the response with application/octet-stream content type
 
         const response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${contentLength}\r\n\r\n`;
-        response+=`${fileContents}`;
+        response =+ `${fileContents}`;
 
         // Send the response headers
 
