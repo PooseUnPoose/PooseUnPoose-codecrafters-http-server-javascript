@@ -53,7 +53,7 @@ function AgentRequest(headers, socket) {
 
 function FileRequest(path, socket) {
     const FileName = path.substring('/files/'.length);
-    const Directory = process.argv[process.argv,indexOf('--directory') + 1];
+    const Directory = process.argv[process.argv.indexOf('--directory') + 1];
     const FilePath = `${Directory}/${FileName}`;
 
     if (fs.existsSync(FilePath)) {
