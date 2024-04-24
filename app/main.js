@@ -55,7 +55,7 @@ function FileRequest(path, socket) {
     const FileName = path.substring('/files/'.length);
     const Directory = process.argv[process.argv.indexOf('--directory') + 1];
     const FilePath = `${Directory}/${FileName}`;
-
+    console.log("We got here");
     if (fs.existsSync(FilePath)) {
         const FileContent = fs.readFileSync(FilePath);
         const FileLength = FileContent.length;
