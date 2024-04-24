@@ -17,8 +17,7 @@ const server = net.createServer((socket) => {
         } else if (path.startsWith('/files/')) {
             FileRequest(path, socket);
         } else {
-            socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
-            return;
+            NotFound();
         }
 
         socket.end();
@@ -65,6 +64,10 @@ function FileRequest(path, socket) {
         socket.write(Response);
         socket.write(FileContent);
     }else{
-        socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
+        NotFound();
     }
+}
+
+function NotFound(){
+    socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
 }
