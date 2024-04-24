@@ -19,6 +19,9 @@ const server = net.createServer((socket) => {
             if(method === 'GET'){
                 GETFileRequest(path, socket);
             }
+            else if(method === 'POST'){
+                PostFile(path, socket);
+            }
         } else {
             NotFound(socket);
         }
@@ -69,7 +72,10 @@ function GETFileRequest(path, socket) {
 }
 
 function PostFile(path, socket){
-
+    const FileName = path.substring('/files/'.length);
+    const Directory = process.argv[process.argv.indexOf('--directory') + 1];
+    const FilePath = `${Directory}/${FileName}`;
+    fs.writeFileSync(FilePath,'utf-8')
 }
 
 
