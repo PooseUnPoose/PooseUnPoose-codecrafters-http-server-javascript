@@ -37,16 +37,16 @@ function EchoRequest(path, socket) {
 }
 
 function AgentRequest(headers, socket) {
-    let userAgent = '';
+    let UserAgent = '';
     for (const header of headers) {
         if (header.startsWith('User-Agent:')) {
-            userAgent = header.substring('User-Agent:'.length).trim();
+            UserAgent = header.substring('User-Agent:'.length).trim();
             break;
         }
     }
-    const contentLength = userAgent.length;
-    console.log(userAgent);
-    const response = `HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${contentLength}\r\n\r\n${userAgent}\r\n`;
+    const ContentLength = UserAgent.length;
+    console.log(UserAgent);
+    const response = `HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\nContent-Length: ${ContentLength}\r\n\r\n${UserAgent}\r\n`;
     socket.write(response);
 }
 
@@ -55,11 +55,11 @@ function FileRequest(path, socket) {
     const Directory = process.argv[process.argv.indexOf('--directory') + 1];
     const FilePath = `${Directory}/${FileName}`;
     if (fs.existsSync(FilePath)) {
-        const fileContents = fs.readFileSync(FilePath);
-        const contentLength = fileContents.length;
-        const response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${contentLength}\r\n\r\n`;
+        const FileContent = fs.readFileSync(FilePath);
+        const ContentLength = FileContent.length;
+        const response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${ContentLength}\r\n\r\n`;
         socket.write(response);
-        socket.write(fileContents);
+        socket.write(FileContent);
     } else {
         NotFound(socket);
     }
