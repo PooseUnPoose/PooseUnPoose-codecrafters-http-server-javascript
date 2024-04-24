@@ -16,7 +16,9 @@ const server = net.createServer((socket) => {
         } else if (path.startsWith('/user-agent')) {
             AgentRequest(headers, socket);
         } else if (path.startsWith('/files/')) {
-            FileRequest(path, socket);
+            if(method === 'GET'){
+                GETFileRequest(path, socket);
+            }
         } else {
             NotFound(socket);
         }
@@ -51,7 +53,7 @@ function AgentRequest(headers, socket) {
     socket.write(response);
 }
 
-function FileRequest(path, socket) {
+function GETFileRequest(path, socket) {
     const FileName = path.substring('/files/'.length);
     const Directory = process.argv[process.argv.indexOf('--directory') + 1];
     const FilePath = `${Directory}/${FileName}`;
