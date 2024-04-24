@@ -71,12 +71,9 @@ function FileRequest(path, socket) {
     if (fs.existsSync(filePath)) {
         const fileContents = fs.readFileSync(filePath);
         const contentLength = fileContents.length;
-        const response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${contentLength}\r\n\r\n${fileContents}`;
+        const response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${contentLength}\r\n\r\n`;
         socket.write(response);
-
-        // Send the file contents as the response body
-
-        //socket.write(fileContents);
+        socket.write(fileContents);
     }else{
         NotFound(socket);
     }
