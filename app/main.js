@@ -20,32 +20,9 @@ server.on('connection', function(socket) {
         } else if (path.startsWith('/echo')) {
             EchoRequest(path, socket);
             return
-
         }else if(path.startsWith('/user-agent')){
             UserAgentRequest(path, socket);
             return
-        }else if(path.startsWith('/files')){
-            /*console.log("we got to the files area");
-            FileStr = path.substring(path.lastIndexOf('/')+1);
-            console.log(FileStr);
-            fs.access(FileStr, fs.constants.F_OK, (err) => {
-                if (err) {
-                    socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
-                    return;
-                }
-                else{
-                    fs.readFile(FileStr, 'utf8', (err, data) => {
-                        console.log("we read the file");
-                        let resp = 'HTTP/1.1 200 OK\r\n';
-                        resp += 'Content-Type: application/octet-stream\r\n';
-                        resp += `Content-Length: ${data.length}\r\n\r\n${data}`;
-                        socket.write(resp);
-                        return
-                    });c
-                    return
-                }
-            });
-            */
         } else {
             socket.write('HTTP/1.1 404 Not Found\r\n\r\n');
             return
@@ -56,6 +33,7 @@ server.on('connection', function(socket) {
 
 function EchoRequest(path, socket){
     const Echostring = path.substring('/echo/'.length);
+    console.log (Echostring);
     const EchoLength = Echostring.length;
     const Response = `HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n Content-Length: ${EchoLength}\r\n\r\n${Echostring}`;
     socket.write(Response);
