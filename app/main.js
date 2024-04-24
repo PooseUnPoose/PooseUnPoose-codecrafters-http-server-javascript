@@ -72,8 +72,10 @@ function FileRequest(path, socket) {
         const fileContents = fs.readFileSync(filePath);
         const contentLength = fileContents.length;
         const response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${contentLength}\r\n\r\n`;
-        //socket.write(response);
+        socket.write(response);
+        console.log(response);
         socket.write(fileContents);
+        console.log(fileContents);
     }else{
         NotFound(socket);
     }
