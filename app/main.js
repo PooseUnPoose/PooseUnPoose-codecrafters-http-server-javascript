@@ -69,20 +69,9 @@ function FileRequest(path, socket) {
     // Check if the file exists
 
     if (fs.existsSync(filePath)) {
-
-        // Read the file contents
-
         const fileContents = fs.readFileSync(filePath);
-
-        // Calculate the content length based on the file size
-
         const contentLength = fileContents.length;
-
-        // Construct the response with application/octet-stream content type
-
         const response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${contentLength}\r\n\r\n${fileContents}`;
-        // Send the response headers
-
         socket.write(response);
 
         // Send the file contents as the response body
