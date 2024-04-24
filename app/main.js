@@ -21,10 +21,7 @@ const server = net.createServer((socket) => {
                 GETFileRequest(path, socket);
             }
             else if(method === 'POST'){
-                const FileName = path.substring('/files/'.length);
-                const Directory = process.argv[process.argv.indexOf('--directory') + 1];
-                fs.writeFileSync(`${Directory}/${FileName}`, body);
-                socket.write('HTTP/1.1 200 OK\r\n\r\n');
+                PostFile(path, socket, body);
             }
         } else {
             NotFound(socket);
@@ -75,11 +72,12 @@ function GETFileRequest(path, socket) {
     }
 }
 
-function PostFile(path, socket){
+function PostFile(path, socket, body){
     const FileName = path.substring('/files/'.length);
     const Directory = process.argv[process.argv.indexOf('--directory') + 1];
     const FilePath = `${Directory}/${FileName}`;
     fs.writeFileSync(FilePath, body);
+    socket.write('HTTP/1.1 201 OK\r\n\r\n');
 
 }
 
